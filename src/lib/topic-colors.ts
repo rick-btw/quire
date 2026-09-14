@@ -1,5 +1,5 @@
 // Top-level folders with their own `--topic-color-<slug>` token in tokens.css.
-const FIXED = new Set(['cs50']);
+const FIXED = new Set(['cs50', 'leetcode']);
 
 /** CSS custom property holding each topic's colour, in topic order. Fixed topics don't take a rotation slot. */
 export function topicColorVars(topics: { slug: string }[]): string[] {

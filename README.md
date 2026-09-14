@@ -1,6 +1,6 @@
 # Quire
 
-**Amirali's personal knowledge library.**
+**My personal knowledge library.**
 
 Quire is where I keep what I learn: notes on data structures, algorithms, machine learning, mathematics,
 programming, and LeetCode problems. I write everything in [Obsidian](https://obsidian.md), and this repository

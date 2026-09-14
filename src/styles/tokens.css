@@ -50,16 +50,18 @@
   --purple: #9e86c8;
   --pink: #b05279;
 
+  /* Orange and red come last so they rarely land next to the fixed LeetCode and CS50 colours. */
   --topic-0: var(--blue);
   --topic-1: var(--green);
   --topic-2: var(--purple);
-  --topic-3: var(--orange);
-  --topic-4: var(--cyan);
-  --topic-5: var(--pink);
-  --topic-6: var(--yellow);
+  --topic-3: var(--cyan);
+  --topic-4: var(--pink);
+  --topic-5: var(--yellow);
+  --topic-6: var(--orange);
   --topic-7: var(--red);
   --topic-none: hsl(0 0% 60%);
   --topic-color-cs50: #a51c30; /* Harvard Crimson */
+  --topic-color-leetcode: #ffa116; /* LeetCode orange */
 
   --graph-line: hsl(0 0% 0% / 0.16);
   --graph-label: var(--text-muted);

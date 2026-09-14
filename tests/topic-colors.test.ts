@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import { topicColorVars } from '../src/lib/topic-colors';
 
 test('topics with a fixed colour do not take a slot in the rotation', () => {
-  const vars = topicColorVars([{ slug: 'cs50' }, { slug: 'data-structures' }, { slug: 'leetcode' }]);
+  const vars = topicColorVars([{ slug: 'cs50' }, { slug: 'topic-a' }, { slug: 'topic-b' }]);
   assert.deepEqual(vars, ['--topic-color-cs50', '--topic-0', '--topic-1']);
 });
 
