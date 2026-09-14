@@ -119,15 +119,24 @@ svg.icon {
 .sidebar-title {
   flex: 1;
   min-width: 0;
-  font-weight: 600;
-  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
   color: var(--text);
   text-decoration: none;
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius-m);
+}
+.sidebar-title-name {
+  font-weight: 600;
+  font-size: 0.95rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.sidebar-title-tagline {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-muted);
 }
 .sidebar-title:hover {
   background: var(--bg-hover);

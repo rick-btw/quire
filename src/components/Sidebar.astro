@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/url';
+import { SITE } from '../site';
 import type { VaultFolder } from '../lib/vault/types';
 import FolderTree from './FolderTree.astro';
 import Icon from './Icon.astro';
@@ -13,7 +14,10 @@ const { tree, name } = Astro.props;
 ---
 <aside class="sidebar" id="sidebar" aria-label="Vault navigation" transition:persist="sidebar">
   <div class="sidebar-header">
-    <a class="sidebar-title" href={withBase('')} data-nav="home">{name}</a>
+    <a class="sidebar-title" href={withBase('')} data-nav="home">
+      <span class="sidebar-title-name">{name}</span>
+      <span class="sidebar-title-tagline">{SITE.tagline}</span>
+    </a>
     <button class="icon-button" type="button" data-action="theme" aria-label="Toggle light and dark theme" title="Toggle theme">
       <Icon name="sun" class="theme-sun" />
       <Icon name="moon" class="theme-moon" />

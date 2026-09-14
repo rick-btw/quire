@@ -1,81 +1,70 @@
 # Quire
 
-A personal, Obsidian-style website for markdown notes. The `notes/` folder in this repository **is** the
-Obsidian vault: write there, push, and GitHub Actions publishes the site. Nothing is edited in the browser.
+**Amirali's personal knowledge library.**
 
-- Sidebar folder tree, reading pane, and a context panel with outline, local graph, and backlinks
-- Full-vault graph view, fuzzy search (`⌘K` / `Ctrl K`), light and dark themes
-- Obsidian syntax: `[[wikilinks]]`, `![[embeds]]`, callouts, KaTeX math, code highlighting, tags, aliases
-- Built with [Astro](https://astro.build); no UI framework, no database, no backend
+Quire is where I keep what I learn: notes on data structures, algorithms, machine learning, mathematics,
+programming, and LeetCode problems. I write everything in [Obsidian](https://obsidian.md), and this repository
+publishes the vault as a website so the notes can be read, searched, and browsed by anyone.
 
-## Writing notes
+Read it at **<https://rick-btw.github.io/quire/>**.
 
-Open `notes/` as a vault in Obsidian (or edit the files any other way). Conventions:
+The site is read-only. Every page is a plain markdown file in [`notes/`](notes/); when I push a change, the
+site rebuilds itself.
 
-| Thing | How |
+## What's inside
+
+| Topic | What it covers |
 | --- | --- |
-| Topics | Top-level folders (`data-structures/`, `mathematics/`, …). Nested folders are fine. |
-| Home page | `notes/index.md`. If it is missing, an overview of topics is generated. |
-| Title | Frontmatter `title`, else the first `# Heading`, else the file name. A leading `# Heading` equal to the title is not rendered twice. |
-| Frontmatter | All optional: `title`, `description`, `tags` (list), `aliases` (list), `draft: true` (hides the note everywhere). |
-| Links | `[[note]]`, `[[folder/note]]`, `[[note\|label]]`, `[[note#Heading]]`. Resolved by path, file name, alias, or title. Broken or ambiguous links render as dashed text with the reason in a tooltip, and the build prints a warning. |
-| Images | Put files in `notes/attachments/` (already configured in `notes/.obsidian/app.json`) and embed with `![[picture.png]]` or `![[picture.png\|300]]`. |
-| Callouts | `> [!note] Title`, `> [!tip]- Folded`, `> [!warning]+ Open`. Obsidian's type aliases are understood. |
-| Math | `$inline$` and `$$ display $$`, rendered with KaTeX (`aligned`, `cases`, matrices all work). |
-| Code | Fenced blocks with a language name are highlighted in both themes. |
-| Persian / RTL | Mixed-direction text is handled per paragraph; Vazirmatn is used for Persian glyphs. |
+| Data structures | Graphs, trees, hash maps, and the algorithms that walk them |
+| Machine learning | How models learn: linear regression, gradient descent, and onwards |
+| Mathematics | The language underneath everything else: linear algebra, calculus |
+| Programming | Things learned while picking up a language |
+| LeetCode | Problems, solutions, and what each one teaches |
 
-Not supported (yet): note transclusion `![[note]]` (rendered as a link), block references `#^id`,
-`==highlights==`, `%%comments%%`, Mermaid diagrams, Dataview.
+The library grows as I study, so expect new topics over time.
 
-URLs come from file paths: `notes/LeetCode Grind/1. Two Sum.md` is served at `/notes/leetcode-grind/1-two-sum/`.
-Non-Latin file names are kept as they are.
+## Features
 
-## Running locally
+**Reading like a vault.** The site is laid out the way Obsidian is: a folder tree on the left, the note in the
+middle, and a context panel on the right with the note's outline, a local graph of its neighbours, and a list of
+backlinks (every note that links to the one you're reading).
 
-Requires Node 22.12 or newer.
+**Connected notes.** Notes link to each other with Obsidian's `[[wikilinks]]`, so you can follow an idea from
+one topic into another. The **graph view** shows the whole library at once, with every note as a node and
+every link as an edge.
 
-```bash
-npm install
-npm run dev
-```
+**Fast search.** Press `⌘K` (or `Ctrl K`) anywhere to fuzzy-search titles, aliases, tags, and note contents.
 
-Open <http://localhost:4321>. Adding, renaming, or editing a note reloads the page so links, backlinks, and
-the tree stay current. Other commands:
+**Rich notes.** Math is typeset with KaTeX, code blocks are syntax-highlighted, and Obsidian callouts (tips,
+warnings, collapsible sections) render as they do in the app. Images and diagrams are embedded inline.
 
-```bash
-npm run build      # static site in dist/
-npm run preview    # serve dist/ locally
-npm run check      # type-check Astro and TypeScript files
-npm test           # unit tests for the vault index, link resolver, and markdown plugins
-npm run verify     # check + test + build
-```
+**Tags.** Notes are tagged by subject, and each tag has its own page listing everything filed under it.
 
-To preview exactly what GitHub Pages will serve for a project site:
+**Light and dark themes.** It follows your system setting, with a toggle in the sidebar. The palette is
+inspired by Obsidian's Minimal theme.
 
-```bash
-SITE_BASE=/quire npm run build && npm run preview
-```
+**Persian and mixed-direction text.** Right-to-left paragraphs are detected automatically and set in
+Vazirmatn, so English and Persian can sit side by side in the same note.
 
-then open <http://localhost:4321/quire/>.
+**Works on any screen.** On phones the sidebar folds into a drawer and the reading pane takes the full width.
 
-## Publishing on GitHub Pages
+## How it's built
 
-1. Create a repository (for example `quire`) and push this project to its `main` branch.
-2. In the repository settings, open **Pages** and set **Source** to **GitHub Actions**.
-3. Push again (or run the workflow manually). `.github/workflows/deploy.yml` builds the site and deploys it to
-   `https://<your-user>.github.io/<repo>/`.
+- **[Astro](https://astro.build)** generates a fully static site. There is no UI framework, no database, and no
+  backend; the only client-side code is for search, the graph, the theme toggle, and navigation state.
+- **The vault is the source.** At build time the notes are scanned into an index that resolves wikilinks (by
+  path, file name, alias, or title), computes backlinks and graph data, and reads last-updated dates from git.
+- **Custom remark/rehype plugins** handle Obsidian syntax: wikilinks and embeds, callouts, duplicate-title
+  stripping, and per-paragraph text direction.
+- **KaTeX** for math, **Shiki** for code highlighting, **MiniSearch** for the search index, and **d3-force**
+  for the graph layout.
+- **Fonts:** Inter for text, JetBrains Mono for code, Vazirmatn for Persian.
+- **GitHub Actions** builds the site on every push to `main` and deploys it to **GitHub Pages**.
 
-The workflow derives `SITE_URL` and `SITE_BASE` from the repository name. For a custom domain, add two
-repository variables (**Settings → Secrets and variables → Actions → Variables**): `SITE_URL=https://notes.example.com`
-and `SITE_BASE=/`, and put the domain in `public/CNAME`.
-
-The "Open in GitHub" link on each note is derived from the repository in CI. For local builds set `SITE_REPO=owner/repo`.
-
-## Project layout
+### Project layout
 
 ```
-notes/                      the vault (your content)
+notes/                      the vault (all content lives here)
 src/lib/vault/              scans the vault: index, slugs, link resolver, graph data, git dates
 src/lib/markdown/           remark/rehype plugins: wikilinks, callouts, title stripping, dir="auto"
 src/integrations/vault.ts   serves attachments in dev, copies them at build, reloads on changes, prints link warnings
