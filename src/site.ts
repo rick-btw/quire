@@ -3,7 +3,7 @@
  */
 export const SITE = {
   name: 'Quire',
-  tagline: "Amirali's personal knowledge library",
+  tagline: "Amirali's knowledge library",
   description: 'A personal library of notes on code, mathematics, and whatever else is worth remembering.',
   /** Vault directory, relative to the project root. This folder is the Obsidian vault. */
   vaultDir: 'notes',
