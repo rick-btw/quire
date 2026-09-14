@@ -17,9 +17,9 @@ const linkCount = data.links.length;
   {
     data.topics.length > 0 && (
       <ul class="graph-legend" aria-label="Topics">
-        {data.topics.map((topic, i) => (
+        {data.topics.map((topic) => (
           <li>
-            <span class="swatch" style={`--swatch: var(--topic-${i % 8})`} />
+            <span class="swatch" style={`--swatch: var(${topic.colorVar})`} />
             <span dir="auto">{topic.name}</span>
           </li>
         ))}

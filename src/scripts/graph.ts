@@ -20,7 +20,7 @@ interface NodeData {
 interface GraphData {
   nodes: NodeData[];
   links: { source: string; target: string }[];
-  topics: { slug: string; name: string }[];
+  topics: { slug: string; name: string; colorVar: string }[];
 }
 
 interface Node extends SimulationNodeDatum, NodeData {
@@ -43,11 +43,11 @@ const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 6;
 const GOLDEN_ANGLE = 2.399963;
 
-function palette() {
+function palette(topics: GraphData['topics']) {
   const css = getComputedStyle(document.documentElement);
   const read = (name: string) => css.getPropertyValue(name).trim();
   return {
-    topics: Array.from({ length: 8 }, (_, i) => read(`--topic-${i}`)),
+    topics: topics.map((topic) => read(topic.colorVar)),
     none: read('--topic-none'),
     line: read('--graph-line'),
     label: read('--graph-label'),
@@ -68,7 +68,7 @@ export function mountGraph(container: HTMLElement): GraphHandle | undefined {
   const compact = container.hasAttribute('data-compact');
   const currentId = container.dataset.current;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let colors = palette();
+  let colors = palette(data.topics);
 
   const spread = compact ? 18 : 34;
   const nodes: Node[] = data.nodes.map((node, i) => {
@@ -212,7 +212,7 @@ export function mountGraph(container: HTMLElement): GraphHandle | undefined {
 
     for (const node of nodes) {
       const r = radius(node);
-      const color = node.topic >= 0 ? colors.topics[node.topic % 8] : colors.none;
+      const color = colors.topics[node.topic] ?? colors.none;
       ctx!.globalAlpha = isDim(node) ? 0.25 : 1;
       ctx!.beginPath();
       ctx!.arc(node.x, node.y, r, 0, Math.PI * 2);
@@ -341,7 +341,7 @@ export function mountGraph(container: HTMLElement): GraphHandle | undefined {
   document.addEventListener(
     'quire:theme',
     () => {
-      colors = palette();
+      colors = palette(data.topics);
       schedule();
     },
     { signal },

@@ -74,6 +74,11 @@ export interface Topic {
   name: string;
 }
 
+export interface GraphTopic extends Topic {
+  /** CSS custom property holding the topic's colour, e.g. `--topic-2`. */
+  colorVar: string;
+}
+
 export interface GraphNode {
   id: string;
   title: string;
@@ -91,7 +96,7 @@ export interface GraphLink {
 export interface GraphData {
   nodes: GraphNode[];
   links: GraphLink[];
-  topics: Topic[];
+  topics: GraphTopic[];
 }
 
 /** Lookup tables used by the resolver. Keys are NFC + lower-cased. */
@@ -112,7 +117,7 @@ export interface VaultIndex {
   byId: Map<string, VaultNote>;
   lookups: Lookups;
   tree: VaultFolder;
-  /** Top-level folders in tree order; their position defines the topic colour. */
+  /** Top-level folders in tree order; `topicColorVars` maps them to colours. */
   topics: Topic[];
   /** Vault-relative paths of every non-markdown file outside dot-directories. */
   attachments: string[];

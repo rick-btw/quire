@@ -59,6 +59,7 @@
   --topic-6: var(--yellow);
   --topic-7: var(--red);
   --topic-none: hsl(0 0% 60%);
+  --topic-color-cs50: #a51c30; /* Harvard Crimson */
 
   --graph-line: hsl(0 0% 0% / 0.16);
   --graph-label: var(--text-muted);
@@ -86,5 +87,6 @@ html.dark {
   --shadow: 0 1px 2px hsl(0 0% 0% / 0.3), 0 12px 32px hsl(0 0% 0% / 0.45);
   --backdrop: hsl(0 0% 0% / 0.55);
 
+  --topic-color-cs50: #c23a4d;
   --graph-line: hsl(0 0% 100% / 0.16);
 }

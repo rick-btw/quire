@@ -20,6 +20,7 @@ site rebuilds itself.
 | Mathematics | The language underneath everything else: linear algebra, calculus |
 | Programming | Things learned while picking up a language |
 | LeetCode | Problems, solutions, and what each one teaches |
+| CS50 | A refresher on lectures 0 and 1 of Harvard's CS50x: binary, algorithms, and programming in C |
 
 The library grows as I study, so expect new topics over time.
 

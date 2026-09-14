@@ -14,6 +14,7 @@ Welcome to **Quire**. Notes live in topic folders in the sidebar, every `[[wikil
 - [[mathematics/linear-algebra|Mathematics]]: the language underneath everything else.
 - [[programming/python/list-comprehensions|Programming]]: things learned while picking up a language.
 - [[leetcode/1-two-sum|LeetCode]]: problems, solutions, and what they teach.
+- [[CS50/Lectures 0 & 1/00-start-here|CS50]]: a refresher on lectures 0 and 1, from bits and algorithms to writing C.
 
 > [!note] How this site works
 > Everything here is a markdown file in an Obsidian vault, published straight from the repository. Nothing is edited in the browser.
