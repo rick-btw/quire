@@ -1,0 +1,37 @@
+---
+import { noteHref } from '../lib/url';
+import type { VaultFolder } from '../lib/vault/types';
+import Icon from './Icon.astro';
+
+interface Props {
+  folder: VaultFolder;
+  depth: number;
+}
+
+const { folder, depth } = Astro.props;
+---
+<ul class={depth === 0 ? 'tree' : 'children'}>
+  {
+    folder.folders.map((sub) => (
+      <li>
+        <details data-folder={sub.path}>
+          <summary>
+            <Icon name="chevron" class="chevron" />
+            <span class="name" dir="auto">{sub.name}</span>
+            <span class="count">{sub.count}</span>
+          </summary>
+          <Astro.self folder={sub} depth={depth + 1} />
+        </details>
+      </li>
+    ))
+  }
+  {
+    folder.notes.map((note) => (
+      <li>
+        <a href={noteHref(note.id)} data-note-id={note.id} dir="auto">
+          {note.title}
+        </a>
+      </li>
+    ))
+  }
+</ul>

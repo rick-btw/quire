@@ -1,0 +1,55 @@
+---
+import { withBase } from '../lib/url';
+import type { GraphData } from '../lib/vault/types';
+import GraphCanvas from './GraphCanvas.astro';
+
+interface Props {
+  data: GraphData;
+  currentId: string;
+}
+
+const { data, currentId } = Astro.props;
+const neighbours = data.nodes.filter((node) => node.id !== currentId);
+---
+<section class="panel-section">
+  <h2 class="panel-heading">
+    <a class="panel-heading-link" href={withBase('graph/')}>Graph</a>
+  </h2>
+  {
+    neighbours.length > 0 ? (
+      <>
+        <GraphCanvas data={data} currentId={currentId} compact label="Notes linked to this one" />
+        <ul class="visually-hidden">
+          {neighbours.map((node) => (
+            <li>
+              <a href={node.href}>{node.title}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <p class="panel-empty">No connections yet.</p>
+    )
+  }
+</section>
+
+<style is:global>
+  .panel-heading-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  .panel-heading-link:hover {
+    color: var(--text);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

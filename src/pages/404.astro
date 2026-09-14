@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
+---
+<Base title="Not found" crumb="Not found">
+  <header class="note-header">
+    <h1>Nothing here</h1>
+    <p class="description">That page does not exist, or the note was renamed.</p>
+  </header>
+  <p>
+    <button type="button" class="sidebar-search" data-action="search" style="margin: 0; display: inline-flex; width: auto">
+      <span>Search the notes</span>
+    </button>
+    or go <a href={withBase('')}>home</a>.
+  </p>
+</Base>

@@ -1,0 +1,87 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/vazirmatn';
+import 'katex/dist/katex.min.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/prose.css';
+import { ClientRouter } from 'astro:transitions';
+import Icon from '../components/Icon.astro';
+import SearchDialog from '../components/SearchDialog.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { withBase } from '../lib/url';
+import { getVaultIndex } from '../lib/vault/index';
+import { SITE } from '../site';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Id of the note being read; the sidebar highlights it. */
+  noteId?: string;
+  /** Short text for the mobile top bar. */
+  crumb?: string;
+  class?: string;
+}
+
+const { title, description, noteId, crumb, class: className } = Astro.props;
+const index = getVaultIndex();
+const pageTitle = title === SITE.name ? title : `${title} · ${SITE.name}`;
+const hasPanel = Astro.slots.has('panel');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <script is:inline>
+      // Theme before first paint: the stored choice, else the system preference.
+      (function () {
+        try {
+          var stored = localStorage.getItem('quire:theme');
+          var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
+    <ClientRouter />
+    <script src="../scripts/app.ts"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="app">
+      <Sidebar tree={index.tree} name={SITE.name} />
+      <div class="sidebar-backdrop" data-action="sidebar-close"></div>
+      <div class:list={['workspace', { 'workspace-single': !hasPanel }]}>
+        <main id="main" class:list={['reading', className]} data-note-id={noteId}>
+          <div class="topbar">
+            <button class="icon-button" type="button" data-action="sidebar" aria-label="Open navigation">
+              <Icon name="menu" />
+            </button>
+            <span class="crumb" dir="auto">{crumb ?? title}</span>
+            <button class="icon-button" type="button" data-action="search" aria-label="Search notes">
+              <Icon name="search" />
+            </button>
+          </div>
+          <div class="content">
+            <slot />
+          </div>
+        </main>
+        {
+          hasPanel && (
+            <aside class="panel" aria-label="Note context">
+              <div class="panel-sections">
+                <slot name="panel" />
+              </div>
+            </aside>
+          )
+        }
+      </div>
+    </div>
+    <SearchDialog />
+  </body>
+</html>

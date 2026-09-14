@@ -1,0 +1,20 @@
+---
+import { getEntry } from 'astro:content';
+import NotePage from '../components/NotePage.astro';
+import TopicOverview from '../components/TopicOverview.astro';
+import Base from '../layouts/Base.astro';
+import { getVaultIndex } from '../lib/vault/index';
+import { SITE } from '../site';
+
+const index = getVaultIndex();
+const home = index.byId.has('index') ? await getEntry('notes', 'index') : undefined;
+---
+{
+  home ? (
+    <NotePage entry={home} />
+  ) : (
+    <Base title={SITE.name} description={SITE.description}>
+      <TopicOverview index={index} />
+    </Base>
+  )
+}

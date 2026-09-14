@@ -1,0 +1,44 @@
+name: Deploy Quire to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history so note "updated" dates are real)
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Build with Astro
+        uses: withastro/action@v6
+        with:
+          node-version: 22
+        env:
+          # Override these two as repository variables (Settings → Secrets and variables → Actions → Variables)
+          # when using a custom domain: SITE_URL=https://notes.example.com and SITE_BASE=/
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+          SITE_BASE: ${{ vars.SITE_BASE || format('/{0}', github.event.repository.name) }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

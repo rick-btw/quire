@@ -1,0 +1,58 @@
+---
+import { noteHref, withBase } from '../lib/url';
+import { noteDate } from '../lib/vault/dates';
+import type { VaultIndex } from '../lib/vault/types';
+
+interface Props {
+  index: VaultIndex;
+}
+
+const { index } = Astro.props;
+const recent = index.notes
+  .filter((note) => note.id !== 'index')
+  .map((note) => ({ note, date: noteDate(index.root, note.path) ?? '' }))
+  .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  .slice(0, 8);
+const format = (iso: string) => {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+};
+---
+<header class="note-header">
+  <h1>{index.name}</h1>
+  <p class="description">{index.notes.length} notes across {index.topics.length} topics.</p>
+</header>
+
+<div class="topic-grid">
+  {
+    index.tree.folders.map((folder, i) => (
+      <a class="topic-card" href={noteHref(folder.notes[0]?.id ?? folder.folders[0]?.notes[0]?.id ?? 'index')} style={`--swatch: var(--topic-${i % 8})`}>
+        <span dir="auto">{folder.name}</span>
+        <span class="count">{folder.count} {folder.count === 1 ? 'note' : 'notes'}</span>
+      </a>
+    ))
+  }
+</div>
+
+{
+  recent.length > 0 && (
+    <section>
+      <h2 class="panel-heading">Recently updated</h2>
+      <ul class="note-list">
+        {recent.map(({ note, date }) => (
+          <li>
+            <a href={noteHref(note.id)} dir="auto">
+              {note.title}
+            </a>
+            {note.description && <span class="desc" dir="auto">{note.description}</span>}
+            <span class="meta">{format(date)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<p class="panel-empty" style="margin-top: 2rem">
+  Tip: add a <code>notes/index.md</code> to write your own home page. <a href={withBase('graph/')}>Open the graph</a>.
+</p>

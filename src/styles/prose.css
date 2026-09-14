@@ -1,0 +1,337 @@
+/* Note typography: headings, links, code, callouts, math, tables. */
+
+.note-header {
+  margin-bottom: 2rem;
+}
+.note-header h1 {
+  margin: 0 0 0.4rem;
+  font-size: 2rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.note-header .description {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+.note-header .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin-top: 0.8rem;
+  font-size: var(--text-small);
+  color: var(--text-faint);
+}
+.tag {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--text-tiny);
+}
+.tag:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.prose {
+  overflow-wrap: break-word;
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 2.2em 0 0.6em;
+  scroll-margin-top: 4rem;
+}
+.prose h1 {
+  font-size: 1.7rem;
+}
+.prose h2 {
+  font-size: 1.35rem;
+}
+.prose h3 {
+  font-size: 1.12rem;
+}
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-size: 1rem;
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose pre,
+.prose blockquote,
+.prose .callout,
+.prose .katex-display {
+  margin: 0 0 1em;
+}
+.prose ul,
+.prose ol {
+  padding-inline-start: 1.5em;
+}
+.prose li + li {
+  margin-top: 0.2em;
+}
+.prose li > p {
+  margin-bottom: 0.4em;
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+.prose strong {
+  font-weight: 600;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+}
+.prose a.internal-link {
+  color: var(--link);
+}
+.prose a.external-link::after {
+  content: '↗';
+  font-size: 0.7em;
+  margin-inline-start: 0.15em;
+  vertical-align: super;
+  color: var(--text-faint);
+}
+.prose .unresolved {
+  color: var(--text-muted);
+  text-decoration: underline dashed var(--text-faint);
+  text-underline-offset: 0.15em;
+  cursor: help;
+}
+
+/* Blockquotes and callouts */
+.prose blockquote {
+  padding: 0.1em 0 0.1em 1em;
+  border-inline-start: 2px solid var(--border-strong);
+  color: var(--text-muted);
+}
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+.callout {
+  --callout-color: var(--blue);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--callout-color) 9%, transparent);
+  border-inline-start: 3px solid var(--callout-color);
+}
+.callout > :last-child {
+  margin-bottom: 0;
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--callout-color);
+  cursor: default;
+}
+details.callout > summary.callout-title {
+  cursor: pointer;
+  list-style: none;
+}
+details.callout > summary.callout-title::-webkit-details-marker {
+  display: none;
+}
+details.callout > summary.callout-title::before {
+  content: '';
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 120ms ease;
+  flex: none;
+}
+details.callout[open] > summary.callout-title::before {
+  transform: rotate(45deg);
+}
+details.callout:not([open]) > summary.callout-title {
+  margin-bottom: 0;
+}
+.callout[data-callout='abstract'],
+.callout[data-callout='info'],
+.callout[data-callout='todo'] {
+  --callout-color: var(--cyan);
+}
+.callout[data-callout='tip'] {
+  --callout-color: var(--green);
+}
+.callout[data-callout='success'] {
+  --callout-color: var(--green);
+}
+.callout[data-callout='question'] {
+  --callout-color: var(--yellow);
+}
+.callout[data-callout='warning'] {
+  --callout-color: var(--orange);
+}
+.callout[data-callout='failure'],
+.callout[data-callout='danger'],
+.callout[data-callout='bug'] {
+  --callout-color: var(--red);
+}
+.callout[data-callout='example'] {
+  --callout-color: var(--purple);
+}
+.callout[data-callout='quote'] {
+  --callout-color: var(--text-faint);
+}
+
+/* Code */
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+.prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-s);
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  direction: ltr;
+  unicode-bidi: embed;
+}
+.prose pre {
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--code-border);
+  background: var(--code-bg);
+  line-height: 1.55;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+}
+.prose pre code {
+  display: block;
+  font-size: 0.85rem;
+  tab-size: 4;
+}
+.prose pre[data-language]::before {
+  content: attr(data-language);
+  float: right;
+  margin: -0.4rem -0.4rem 0 0.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-tiny);
+  color: var(--text-faint);
+}
+/* Shiki dual themes: pick the light or dark variables by the html class. */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: transparent;
+  font-style: var(--shiki-light-font-style, inherit);
+  font-weight: var(--shiki-light-font-weight, inherit);
+  text-decoration: var(--shiki-light-text-decoration, inherit);
+}
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style, inherit);
+  font-weight: var(--shiki-dark-font-weight, inherit);
+  text-decoration: var(--shiki-dark-text-decoration, inherit);
+}
+.prose pre.astro-code {
+  background-color: var(--code-bg) !important;
+}
+
+/* Tables */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.prose th,
+.prose td {
+  padding: 0.4em 0.8em;
+  border: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 600;
+  background: var(--bg-3);
+}
+
+/* Task lists */
+.prose li:has(> input[type='checkbox']) {
+  list-style: none;
+  margin-inline-start: -1.5em;
+  padding-inline-start: 0;
+}
+.prose input[type='checkbox'] {
+  margin: 0 0.5em 0 0;
+  vertical-align: -0.1em;
+  accent-color: var(--accent);
+}
+.prose li:has(> input[type='checkbox']:checked) {
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+/* Footnotes */
+.prose .footnotes {
+  margin-top: 3rem;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+.prose .footnotes ol {
+  padding-inline-start: 1.2em;
+}
+.prose sup a {
+  text-decoration: none;
+}
+
+/* Math */
+.prose .katex {
+  font-size: 1.06em;
+}
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0;
+  direction: ltr;
+}
+.prose .katex-display > .katex {
+  text-align: center;
+}
+
+/* Bidi: the article follows its content; code and math stay LTR. */
+.prose [dir='auto'] {
+  text-align: start;
+}
+.prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.05em 0.35em;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-s);
+}
+.prose mark {
+  background: color-mix(in srgb, var(--yellow) 45%, transparent);
+  color: inherit;
+}

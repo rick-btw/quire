@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import { noteHref } from '../../lib/url';
+import { getVaultIndex } from '../../lib/vault/index';
+import { tagSlug } from '../../lib/vault/slug';
+import type { VaultNote } from '../../lib/vault/types';
+
+export function getStaticPaths() {
+  const index = getVaultIndex();
+  const byTag = new Map<string, { tag: string; notes: VaultNote[] }>();
+  for (const note of index.notes) {
+    for (const tag of note.tags) {
+      const slug = tagSlug(tag);
+      const bucket = byTag.get(slug) ?? { tag, notes: [] };
+      bucket.notes.push(note);
+      byTag.set(slug, bucket);
+    }
+  }
+  return [...byTag.entries()].map(([slug, { tag, notes }]) => ({ params: { tag: slug }, props: { tag, notes } }));
+}
+
+const { tag, notes } = Astro.props as { tag: string; notes: VaultNote[] };
+---
+<Base title={`#${tag}`} description={`Notes tagged ${tag}`} crumb={`#${tag}`}>
+  <header class="note-header">
+    <h1 dir="auto">#{tag}</h1>
+    <p class="description">{notes.length} {notes.length === 1 ? 'note' : 'notes'}</p>
+  </header>
+  <ul class="note-list">
+    {
+      notes.map((note) => (
+        <li>
+          <a href={noteHref(note.id)} dir="auto">
+            {note.title}
+          </a>
+          {note.description && (
+            <span class="desc" dir="auto">
+              {note.description}
+            </span>
+          )}
+          <span class="meta" dir="auto">{note.topicName}</span>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

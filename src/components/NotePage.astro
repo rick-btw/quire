@@ -1,0 +1,56 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { noteHref } from '../lib/url';
+import { noteDate } from '../lib/vault/dates';
+import { localGraph } from '../lib/vault/graph';
+import { getVaultIndex } from '../lib/vault/index';
+import { SITE } from '../site';
+import Backlinks from './Backlinks.astro';
+import Icon from './Icon.astro';
+import LocalGraph from './LocalGraph.astro';
+import NoteHeader from './NoteHeader.astro';
+import Outline from './Outline.astro';
+
+interface Props {
+  entry: CollectionEntry<'notes'>;
+}
+
+const { entry } = Astro.props;
+const index = getVaultIndex();
+const note = index.byId.get(entry.id);
+if (!note) throw new Error(`Note "${entry.id}" is in the collection but not in the vault index.`);
+
+const { Content, headings } = await render(entry);
+const updated = noteDate(index.root, note.path);
+const github = SITE.github.repo
+  ? `https://github.com/${SITE.github.repo}/blob/${SITE.github.branch}/${SITE.vaultDir}/${note.path
+      .split('/')
+      .map(encodeURIComponent)
+      .join('/')}`
+  : undefined;
+const crumb = note.folder ? `${note.folder} / ${note.title}` : note.title;
+---
+<Base title={note.title} description={note.description} noteId={note.id} crumb={crumb}>
+  <article class="note" dir="auto">
+    <NoteHeader note={note} updated={updated} />
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+  <Fragment slot="panel">
+    <Outline headings={headings} />
+    <LocalGraph data={localGraph(index, note.id, (id) => noteHref(id))} currentId={note.id} />
+    <Backlinks links={index.backlinks.get(note.id) ?? []} index={index} />
+    {
+      github && (
+        <section class="panel-section">
+          <a class="panel-link" href={github} rel="noopener noreferrer" target="_blank">
+            <Icon name="external" />
+            <span>Open in GitHub</span>
+          </a>
+        </section>
+      )
+    }
+  </Fragment>
+</Base>

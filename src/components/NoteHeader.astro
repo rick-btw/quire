@@ -1,0 +1,26 @@
+---
+import { tagHref } from '../lib/url';
+import type { VaultNote } from '../lib/vault/types';
+
+interface Props {
+  note: VaultNote;
+  updated?: string;
+}
+
+const { note, updated } = Astro.props;
+const date = updated ? new Date(updated) : undefined;
+const formatted =
+  date && !Number.isNaN(date.getTime())
+    ? date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : undefined;
+---
+<header class="note-header">
+  <h1 dir="auto">{note.title}</h1>
+  {note.description && <p class="description" dir="auto">{note.description}</p>}
+  <div class="meta">
+    {note.topicName && <span dir="auto">{note.topicName}</span>}
+    {formatted && <time datetime={updated}>Updated {formatted}</time>}
+    <span>{note.wordCount} words</span>
+    {note.tags.map((tag) => <a class="tag" href={tagHref(tag)} dir="auto">#{tag}</a>)}
+  </div>
+</header>

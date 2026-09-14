@@ -1,0 +1,46 @@
+---
+import GraphCanvas from '../../components/GraphCanvas.astro';
+import Base from '../../layouts/Base.astro';
+import { noteHref } from '../../lib/url';
+import { toGraphData } from '../../lib/vault/graph';
+import { getVaultIndex } from '../../lib/vault/index';
+
+const index = getVaultIndex();
+const data = toGraphData(index, (id) => noteHref(id));
+const linkCount = data.links.length;
+---
+<Base title="Graph" description="Every note and the links between them." class="graph-page">
+  <header class="note-header">
+    <h1>Graph</h1>
+    <p class="description">{data.nodes.length} notes, {linkCount} links. Drag to explore, scroll to zoom, click a note to open it.</p>
+  </header>
+  {
+    data.topics.length > 0 && (
+      <ul class="graph-legend" aria-label="Topics">
+        {data.topics.map((topic, i) => (
+          <li>
+            <span class="swatch" style={`--swatch: var(--topic-${i % 8})`} />
+            <span dir="auto">{topic.name}</span>
+          </li>
+        ))}
+        {data.nodes.some((node) => node.topic < 0) && (
+          <li>
+            <span class="swatch" style="--swatch: var(--topic-none)" />
+            <span>Unfiled</span>
+          </li>
+        )}
+      </ul>
+    )
+  }
+  <GraphCanvas data={data} label="Graph of all notes" />
+  <details class="graph-list">
+    <summary>All notes as a list</summary>
+    <ul>
+      {data.nodes.map((node) => (
+        <li>
+          <a href={node.href} dir="auto">{node.title}</a>
+        </li>
+      ))}
+    </ul>
+  </details>
+</Base>

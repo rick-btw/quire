@@ -1,0 +1,34 @@
+---
+import type { GraphData } from '../lib/vault/types';
+import Icon from './Icon.astro';
+
+interface Props {
+  data: GraphData;
+  currentId?: string;
+  compact?: boolean;
+  label?: string;
+}
+
+const { data, currentId, compact = false, label = 'Note graph' } = Astro.props;
+// `<` is escaped so the JSON can never close its own <script> tag.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+<div class="graph" data-graph data-compact={compact || undefined} data-current={currentId} role="img" aria-label={label}>
+  <canvas></canvas>
+  <script is:inline type="application/json" data-graph-data set:html={json} />
+  {
+    !compact && (
+      <div class="graph-controls">
+        <button class="icon-button" type="button" data-action="graph-zoom-in" aria-label="Zoom in">
+          <Icon name="plus" />
+        </button>
+        <button class="icon-button" type="button" data-action="graph-zoom-out" aria-label="Zoom out">
+          <Icon name="minus" />
+        </button>
+        <button class="icon-button" type="button" data-action="graph-fit" aria-label="Fit graph to view">
+          <Icon name="fit" />
+        </button>
+      </div>
+    )
+  }
+</div>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    path { fill: none; stroke: #262626; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) { path { stroke: #e6e6e6; } }
+  </style>
+  <!-- a quire: folded sheets, seen from the spine -->
+  <path d="M6 9.5 Q16 4 26 9.5" />
+  <path d="M6 16 Q16 10.5 26 16" />
+  <path d="M6 22.5 Q16 17 26 22.5" />
+  <path d="M6 9.5 V22.5 M26 9.5 V22.5" />
+</svg>

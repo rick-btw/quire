@@ -1,0 +1,51 @@
+---
+import { withBase } from '../lib/url';
+import type { VaultFolder } from '../lib/vault/types';
+import FolderTree from './FolderTree.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  tree: VaultFolder;
+  name: string;
+}
+
+const { tree, name } = Astro.props;
+---
+<aside class="sidebar" id="sidebar" aria-label="Vault navigation" transition:persist="sidebar">
+  <div class="sidebar-header">
+    <a class="sidebar-title" href={withBase('')} data-nav="home">{name}</a>
+    <button class="icon-button" type="button" data-action="theme" aria-label="Toggle light and dark theme" title="Toggle theme">
+      <Icon name="sun" class="theme-sun" />
+      <Icon name="moon" class="theme-moon" />
+    </button>
+    <button class="icon-button sidebar-close" type="button" data-action="sidebar-close" aria-label="Close navigation">
+      <Icon name="close" />
+    </button>
+  </div>
+  <button class="sidebar-search" type="button" data-action="search">
+    <Icon name="search" />
+    <span>Search notes</span>
+    <kbd data-shortcut>⌘K</kbd>
+  </button>
+  <nav class="sidebar-nav" aria-label="Notes">
+    <FolderTree folder={tree} depth={0} />
+  </nav>
+  <div class="sidebar-footer">
+    <a href={withBase('graph/')} data-nav="graph">
+      <Icon name="graph" />
+      <span>Graph view</span>
+    </a>
+  </div>
+</aside>
+
+<style is:global>
+  .theme-sun {
+    display: none;
+  }
+  html.dark .theme-sun {
+    display: block;
+  }
+  html.dark .theme-moon {
+    display: none;
+  }
+</style>

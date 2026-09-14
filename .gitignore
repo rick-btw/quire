@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+npm-debug.log*
+
+# Obsidian per-device state (keep app.json and appearance.json)
+notes/.obsidian/workspace*.json
+notes/.obsidian/cache/
+notes/.trash/

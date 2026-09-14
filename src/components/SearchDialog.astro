@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+---
+<dialog class="search-dialog" id="search" aria-label="Search notes">
+  <div class="search-input">
+    <Icon name="search" />
+    <input
+      type="search"
+      id="search-input"
+      placeholder="Search notes…"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      aria-label="Search notes"
+      aria-controls="search-results"
+    />
+  </div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-status" id="search-status" aria-live="polite">
+    <kbd>↑</kbd> <kbd>↓</kbd> to move · <kbd>↵</kbd> to open · <kbd>esc</kbd> to close
+  </div>
+</dialog>

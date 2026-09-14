@@ -1,0 +1,25 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const headings = Astro.props.headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+---
+{
+  headings.length > 0 && (
+    <section class="panel-section">
+      <h2 class="panel-heading">On this page</h2>
+      <ul class="outline" data-outline>
+        {headings.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`} style={`--depth:${heading.depth}`} dir="auto">
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
