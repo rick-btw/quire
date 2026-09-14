@@ -3,6 +3,7 @@ dist/
 .astro/
 .DS_Store
 npm-debug.log*
+.claude/
 
 # Obsidian per-device state (keep app.json and appearance.json)
 notes/.obsidian/workspace*.json
