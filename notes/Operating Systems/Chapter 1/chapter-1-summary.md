@@ -1,11 +1,11 @@
 ---
-title: "Chapter 1: Introduction"
+title: "Chapter 1 Summary"
 description: Quiz-prep summary of Silberschatz chapter 1. Covers the boot process, interrupts, storage, multiprocessors, and dual-mode operation.
 tags: [operating-systems, quiz-prep]
 ---
-# Chapter 1: Introduction
+# Chapter 1 Summary
 
-Source: the chapter 1 slides for *Operating System Concepts* (Silberschatz, 9th ed.).
+Source: the chapter 1 slides for *Operating System Concepts* (Silberschatz, 9th ed.). The full notes start at [[00-overview|Chapter 1 overview]].
 
 > [!warning] Last year's Quiz 1 was a single question: **"The boot process"** (فرآیند بوت شدن)
 > A numbered 7-step answer with the MBR byte sizes got full marks. Know [the boot process](#2-the-boot-process) cold, then interrupts, dual mode, and multiprocessors.

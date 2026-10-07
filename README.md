@@ -3,7 +3,7 @@
 **My personal knowledge library.**
 
 Quire is where I keep what I learn: notes on data structures, algorithms, machine learning, mathematics,
-programming, and LeetCode problems. I write everything in [Obsidian](https://obsidian.md), and this repository
+programming, operating systems, and LeetCode problems. I write everything in [Obsidian](https://obsidian.md), and this repository
 publishes the vault as a website so the notes can be read, searched, and browsed by anyone.
 
 Read it at **<https://rick-btw.github.io/quire/>**.
@@ -21,6 +21,7 @@ site rebuilds itself.
 | Programming | Things learned while picking up a language |
 | LeetCode | Problems, solutions, and what each one teaches |
 | CS50 | A refresher on lectures 0 and 1 of Harvard's CS50x: binary, algorithms, and programming in C |
+| Operating Systems | Course notes on *Operating System Concepts*, starting with chapter 1: booting, interrupts, storage, and multiprocessors |
 
 The library grows as I study, so expect new topics over time.
 

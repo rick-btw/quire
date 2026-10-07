@@ -9,6 +9,7 @@ Welcome to **Quire**. Notes live in topic folders in the sidebar, every `[[wikil
 
 ## Topics
 
+- [[Operating Systems/Chapter 1/00-overview|Operating Systems]]: how an OS works, starting with chapter 1: booting, interrupts, storage, and multiprocessors.
 - [[data-structures/graphs|Data structures]]: graphs, trees, hash maps, and the algorithms that walk them.
 - [[machine-learning/gradient-descent|Machine learning]]: how models learn.
 - [[mathematics/linear-algebra|Mathematics]]: the language underneath everything else.
