@@ -5,7 +5,7 @@ tags: [operating-systems, quiz-prep]
 ---
 # Chapter 2 Summary
 
-Source: the chapter 2 slides (*Operating-System Structures*) for *Operating System Concepts* (Silberschatz, 9th ed.), **slides 2.1–2.48**, the part covered in class so far. Chapter 1 is in [[00-overview|Chapter 1 overview]].
+Source: the chapter 2 slides (*Operating-System Structures*) for *Operating System Concepts* (Silberschatz, 9th ed.), **slides 2.1–2.48**, the part covered in class so far. Chapter 1 is in [[00-overview|Chapter 1 overview]]. Answers to the textbook's exercises are in [[chapter-2-practice-exercises|Chapter 2 Practice Exercises]].
 
 > [!warning] What last year's quizzes asked from this chapter
 > - **Quiz 2: "The operating system services."** A list of all **9 services**, each with a one-line definition, got full marks. → [Section 1](#1-operating-system-services). This is the most likely question.
