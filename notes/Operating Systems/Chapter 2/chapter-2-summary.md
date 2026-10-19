@@ -5,11 +5,11 @@ tags: [operating-systems, quiz-prep]
 ---
 # Chapter 2 Summary
 
-Source: the chapter 2 slides (*Operating-System Structures*) for *Operating System Concepts* (Silberschatz, 9th ed.), **slides 2.1–2.48**, the part covered in class so far. Chapter 1 is in [[00-overview|Chapter 1 overview]]. Answers to the textbook's exercises are in [[chapter-2-practice-exercises|Chapter 2 Practice Exercises]].
+Source: the chapter 2 slides (*Operating-System Structures*) for *Operating System Concepts* (Silberschatz, 9th ed.), **slides 2.1–2.53** (numbered as in the updated 71-slide deck). This note was written for **Quiz 2**. The rest of the chapter, for Quiz 3, is in [[chapter-2-quiz-3|Quiz 3: Chapter 2, Slides 48–71]]. Chapter 1 is in [[00-overview|Chapter 1 overview]]. Answers to the textbook's exercises are in [[chapter-2-practice-exercises|Chapter 2 Practice Exercises]].
 
 > [!warning] What last year's quizzes asked from this chapter
 > - **Quiz 2: "The operating system services."** A list of all **9 services**, each with a one-line definition, got full marks. → [Section 1](#1-operating-system-services). This is the most likely question.
-> - **Quiz 3: "Operating system structures."** It started with **simple structure (MS-DOS)** and **UNIX's features**, which are both in this week's range → [Section 6](#6-operating-system-structure). The rest of that answer (layered, microkernel, modules, hybrid) is after slide 48. There's a short preview of it at the end of that section, just in case.
+> - **Quiz 3: "Operating system structures."** It started with **simple structure (MS-DOS)** and **UNIX's features**, which were both in Quiz 2's range → [Section 6](#6-operating-system-structure). The rest of that answer (layered, microkernel, modules, hybrid) is in slides 2.54–2.69, covered in full in [[chapter-2-quiz-3|the Quiz 3 note]].
 >
 > After those two, know **system calls** (the 6 types and the 3 ways to pass parameters), **policy vs mechanism**, and the **system-program categories**.
 
@@ -223,7 +223,7 @@ System programs provide **a convenient environment for program development and e
 
 **The Windows Registry** is a **database** of settings for the programs and hardware installed. Installing a program adds a **subkey** with its location, version, and how to start it. Because it's a database it supports **atomic updates**. If two processes update the same value at the same time, one change precedes the other, so the data stays consistent.
 
-**Linux examples (slides 2.37–2.40):**
+**Linux examples (slides 2.41–2.45):**
 
 | Area | Programs |
 | --- | --- |
@@ -235,7 +235,7 @@ System programs provide **a convenient environment for program development and e
 | Users | `useradd`, `usermod`, `userdel`, `passwd` |
 | Monitoring | `htop` (interactive process viewer), `vmstat` (processes, memory, paging, block I/O, traps, CPU) |
 
-> [!note] One inconsistency on slide 2.37
+> [!note] One inconsistency on slide 2.41
 > The slide lists the **kernel** as an "example of a system program". By the definition in [[01-what-is-an-operating-system|chapter 1]], system programs ship with the OS but **are not** the kernel. If asked, say the kernel is the core, and system programs run on top of it.
 
 **`ps`:**
@@ -284,7 +284,7 @@ A general-purpose OS is a **very large program**, so how it's structured matters
 - **layered**
 - **microkernel** (Mach)
 
-Slides 2.44–2.48 cover the first two.
+Slides 2.49–2.53 cover the first two.
 
 ### Simple structure: MS-DOS
 
@@ -307,7 +307,7 @@ The weakness: an **application program can reach the lower layers directly**, al
 > [!info] Beyond the slides: why MS-DOS couldn't protect itself
 > The Intel 8088 it ran on had **no dual mode** and no hardware protection ([[17-dual-mode-and-timer|chapter 1]]). Nothing stopped user programs from touching the hardware.
 
-**History (slide 2.46):**
+**History (slide 2.51):**
 - MS-DOS was a renamed form of **86-DOS**, written by **Tim Paterson** at **Seattle Computer Products**. Its first version shipped in **August 1980**.
 - **Microsoft** needed an OS for the **IBM PC**. It hired Paterson in **May 1981** and bought 86-DOS 1.10 for **US$25,000** in **July 1981**.
 
@@ -331,7 +331,9 @@ UNIX was first developed in the **1960s** and has been under constant developmen
 > [!tip] Memorize the features as "MMS-SPC"
 > **M**ultiuser, **M**ultitasking, **S**hell scripting, **S**ecurity, **P**ortability, **C**ommunication. Last year's answer listed five of these: it missed portability.
 
-> [!example]- Preview of slides 2.49–2.64 (not covered yet; last year's Quiz 3 included them)
+> [!example]- Preview of slides 2.54–2.69 (Quiz 3)
+> The full version, with likely questions, is in [[chapter-2-quiz-3|Quiz 3: Chapter 2, Slides 48–71]].
+>
 > - **UNIX structure**: two separable parts, **system programs** and the **kernel**. The kernel is everything below the system-call interface and above the hardware: file system, CPU scheduling, memory management, all in one level. It's "beyond simple but not fully layered".
 > - **Layered**: the OS is split into layers. **Layer 0 is the hardware, layer N is the user interface**, and each layer uses only the layers below it.
 > - **Microkernel** (Mach, the basis of macOS's Darwin): moves as much as possible **out of the kernel into user space**, and the parts communicate by **message passing**. **Pros**: easier to extend and port, more reliable and more secure. **Con**: performance overhead from user↔kernel communication.

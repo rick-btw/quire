@@ -7,30 +7,33 @@ tags: [operating-systems, quiz-prep, practice]
 
 Answers to the **Practice Exercises 2.1–2.11** at the end of chapter 2 of *Operating System Concepts* (9th ed.). Every answer is sized for a **5-minute quiz**: short numbered points you can write from memory in about 3–4 minutes. Study notes: [[chapter-2-summary|Chapter 2 Summary]].
 
-## Which ones matter for tomorrow
+## Which ones matter for which quiz
 
-| # | Topic | In this week's slides (2.1–2.48)? | In the notes | Past quizzes |
+| # | Topic | Slides (71-slide deck) | In the notes | Past quizzes |
 | --- | --- | --- | --- | --- |
-| 2.1 | Purpose of system calls | ✅ 2.15–2.21 | Summary §3 | — |
+| 2.1 | Purpose of system calls | ✅ 2.15–2.21 (Quiz 2) | Summary §3 | — |
 | 2.2 | Process-management activities | ❌ Textbook §1.6, skipped by the slides | — | — |
 | 2.3 | Memory-management activities | ❌ Textbook §1.7, skipped by the slides | — | — |
 | 2.4 | Secondary-storage activities | ❌ Textbook §1.8, skipped by the slides | — | — |
-| 2.5 | Command interpreter | ✅ 2.8 | Summary §2 (purpose only; "why separate" is new here) | Quiz 2 mentioned the CLI, as one of the UI types |
-| 2.6 | System calls to start a process | ✅ 2.31 | Summary §3 (the FreeBSD example) | — |
-| 2.7 | Purpose of system programs | ✅ 2.32–2.36 | Summary §4 | — |
-| 2.8 | Layered approach: pros and cons | ❌ Slide 2.56, not covered yet | Summary §6, preview only | **Quiz 3** described the layered approach |
-| 2.9 | Five services | ✅ 2.4–2.7 | Summary §1 | **Quiz 2 asked exactly this topic** |
-| 2.10 | OS in firmware vs on disk | ⚠️ Chapter 1 boot slides and slide 2.65 (not covered yet) | [[02-boot-process]], [[03-bios-and-uefi]] | Related to **Quiz 1** (boot process) |
-| 2.11 | Choosing which OS to boot | ⚠️ Chapter 1 GRUB slides (1.19–1.22) | [[06-grub]] | Related to **Quiz 1** |
+| 2.5 | Command interpreter | ✅ 2.8 (Quiz 2) | Summary §2 (purpose only; "why separate" is new here) | Quiz 2 mentioned the CLI, as one of the UI types |
+| 2.6 | System calls to start a process | ✅ 2.31 (Quiz 2) | Summary §3 (the FreeBSD example) | — |
+| 2.7 | Purpose of system programs | ✅ 2.33–2.40 (Quiz 2) | Summary §4 | — |
+| 2.8 | Layered approach: pros and cons | ✅ 2.61 (**Quiz 3**) | [[chapter-2-quiz-3]] §4 | **Quiz 3** described the layered approach |
+| 2.9 | Five services | ✅ 2.4–2.7 (Quiz 2) | Summary §1 | **Quiz 2 asked exactly this topic** |
+| 2.10 | OS in firmware vs on disk | ✅ 2.70 (**Quiz 3**), plus the chapter 1 boot slides | [[chapter-2-quiz-3]] §8, [[02-boot-process]], [[03-bios-and-uefi]] | Related to **Quiz 1** (boot process) |
+| 2.11 | Choosing which OS to boot | ✅ 2.70 (**Quiz 3**), plus the chapter 1 GRUB slides (1.19–1.22) | [[chapter-2-quiz-3]] §8, [[06-grub]] | Related to **Quiz 1** |
 
-> [!tip] Priority for tomorrow
+> [!tip] Priority for Quiz 2
 > 1. **2.9** (the services, which is last year's Quiz 2 topic)
 > 2. **2.1** (system calls)
 > 3. **2.7** (system programs)
 > 4. **2.6** (`fork`/`exec`)
 > 5. **2.5** (command interpreter)
 >
-> Those five are all in this week's slides. 2.2–2.4 are three quick lists worth memorizing for the midterm, but they aren't in the lecturer's slides.
+> Those five are all in Quiz 2's range. 2.2–2.4 are three quick lists worth memorizing for the midterm, but they aren't in the lecturer's slides.
+
+> [!tip] Priority for Quiz 3
+> **2.8** (layered approach), then **2.10** and **2.11** (boot). All three are in slides 2.48–2.71.
 
 ---
 
@@ -124,7 +127,7 @@ When the program finishes, it calls **`exit()`** with a status: **0 = no error**
 
 ## 2.7 What is the purpose of system programs?
 
-**Notes:** [[chapter-2-summary|Summary §4]] · **Past quiz:** no · **Slides:** 2.32–2.36
+**Notes:** [[chapter-2-summary|Summary §4]] · **Past quiz:** no · **Slides:** 2.33–2.40
 
 **Answer:**
 System programs provide **a convenient environment for program development and execution**.
@@ -144,7 +147,7 @@ System programs provide **a convenient environment for program development and e
 
 ## 2.8 What is the main advantage of the layered approach? What are its disadvantages?
 
-**Notes:** [[chapter-2-summary|Summary §6]] (preview only) · **Past quiz:** Quiz 3 described the layered approach · **Slides:** 2.56 (not covered yet)
+**Notes:** [[chapter-2-quiz-3|Quiz 3 note §4]] · **Past quiz:** Quiz 3 described the layered approach · **Slides:** 2.61 (Quiz 3 range)
 
 **Answer:**
 In the layered approach, the OS is divided into layers. **Layer 0 is the hardware, layer N is the user interface**, and each layer uses only the layers below it.
@@ -192,7 +195,7 @@ For each service: **+** is the convenience, and **✗** is why a user-level prog
 
 ## 2.10 Why do some systems store the OS in firmware, while others store it on disk?
 
-**Notes:** [[02-boot-process]], [[03-bios-and-uefi]] (chapter 1) · **Past quiz:** related to Quiz 1 (boot) · **Slides:** 1.10, 1.18, and 2.65 (not covered yet)
+**Notes:** [[chapter-2-quiz-3|Quiz 3 note §8]], [[02-boot-process]], [[03-bios-and-uefi]] · **Past quiz:** related to Quiz 1 (boot) · **Slides:** 1.10, 1.18, and 2.70 (Quiz 3 range)
 
 **Answer:**
 **Firmware (ROM/EPROM).** Used for **small OSes, simple hardware, and rugged operation**, such as phones, tablets, game consoles, and embedded devices.
@@ -210,7 +213,7 @@ So these systems keep only a **small bootstrap loader in firmware**. It loads th
 
 ## 2.11 How could a system be designed to allow a choice of OSes to boot from? What would the bootstrap program need to do?
 
-**Notes:** [[06-grub]], [[05-mbr-and-gpt]] (chapter 1) · **Past quiz:** related to Quiz 1 (boot) · **Slides:** 1.19–1.22, and 2.65 (not covered yet)
+**Notes:** [[chapter-2-quiz-3|Quiz 3 note §8]], [[06-grub]], [[05-mbr-and-gpt]] · **Past quiz:** related to Quiz 1 (boot) · **Slides:** 1.19–1.22, and 2.70 (Quiz 3 range)
 
 **Answer:**
 **Design:**
