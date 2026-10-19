@@ -48,15 +48,25 @@ A general-purpose OS is a **very large program**, so how it's organized matters.
 - It is **not divided into modules**.
 - It has some structure, but its **interfaces and levels of functionality are not well separated**.
 
-```text
-application program ──────────────┐
-      │                           │  applications can skip
-resident system program ────────┐ │  layers and reach the
-      │                         │ │  hardware directly
-MS-DOS device drivers ────────┐ │ │
-      │                       ▼ ▼ ▼
-ROM BIOS device drivers
-```
+<svg viewBox="0 0 600 290" width="100%" style="max-width:600px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="MS-DOS layer structure: application program, resident system program, MS-DOS device drivers, ROM BIOS device drivers. Applications can bypass layers and reach the BIOS drivers directly." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-msdos-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-msdos-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<rect x="90" y="16" width="330" height="36" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="255.0" y="39.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">application program</text>
+<rect x="90" y="84" width="330" height="36" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="255.0" y="107.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">resident system program</text>
+<rect x="90" y="152" width="390" height="36" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="285.0" y="175.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">MS-DOS device drivers</text>
+<rect x="40" y="220" width="520" height="36" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="300.0" y="243.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">ROM BIOS device drivers</text>
+<path d="M255,52 V82" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-msdos-m)"/>
+<path d="M255,120 V150" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-msdos-m)"/>
+<path d="M255,188 V218" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-msdos-m)"/>
+<path d="M420,26 H530 V218" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#q3-msdos-a)"/>
+<path d="M420,42 H450 V150" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#q3-msdos-a)"/>
+<path d="M90,102 H62 V218" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#q3-msdos-a)"/>
+<path d="M150,276 H190" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4"/>
+<text x="200.0" y="280.0" text-anchor="start" style="fill:var(--text-muted, #777);font-size:12px">applications can skip layers and reach the hardware directly</text>
+</svg>
 
 **History:**
 - MS-DOS was a renamed **86-DOS**, written by **Tim Paterson** at Seattle Computer Products, first shipped in **August 1980**.
@@ -85,20 +95,94 @@ The original UNIX was **limited by hardware functionality**, so it had **limited
 
 The slide sums it up as **"beyond simple but not fully layered"** (slide 2.55):
 
-```text
-                 (the users)
-   shells and commands · compilers and interpreters · system libraries
- ┌═══════════════ system-call interface to the kernel ═══════════════┐
- │  signals, terminal   │  file system, swapping, │  CPU scheduling,     │
- │  handling, character │  block I/O system, disk │  page replacement,   │  ← the kernel:
- │  I/O, terminal       │  and tape drivers       │  demand paging,      │    one big level
- │  drivers             │                         │  virtual memory      │
- └═══════════════ kernel interface to the hardware ══════════════════┘
-   terminal controllers │ device controllers      │ memory controllers
-   terminals            │ disks and tapes         │ physical memory
-```
+<svg viewBox="0 0 680 356" width="100%" style="max-width:680px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="Traditional UNIX structure: users, then shells, compilers and system libraries, then the kernel between the system-call interface and the kernel interface to the hardware, then terminal, device and memory controllers." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-unix-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-unix-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<rect x="56" y="10" width="604" height="30" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="358.0" y="30.0" text-anchor="middle" style="fill:var(--text-muted, #777)">(the users)</text>
+<rect x="56" y="48" width="604" height="34" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="358.0" y="70.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">shells and commands · compilers and interpreters · system libraries</text>
+<rect x="56" y="92" width="604" height="198" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<rect x="56" y="92" width="604" height="28" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="358.0" y="111.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-style:italic">system-call interface to the kernel</text>
+<rect x="56" y="262" width="604" height="28" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="358.0" y="281.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-style:italic">kernel interface to the hardware</text>
+<path d="M257.3,120 V262" style="fill:none;stroke:var(--accent, #6c99bb);stroke-opacity:0.6"/>
+<path d="M458.7,120 V262" style="fill:none;stroke:var(--accent, #6c99bb);stroke-opacity:0.6"/>
+<text x="156.7" y="164.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">signals</text>
+<text x="156.7" y="185.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">terminal handling</text>
+<text x="156.7" y="206.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">character I/O system</text>
+<text x="156.7" y="227.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">terminal drivers</text>
+<text x="358.0" y="164.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">file system</text>
+<text x="358.0" y="185.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">swapping</text>
+<text x="358.0" y="206.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">block I/O system</text>
+<text x="358.0" y="227.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">disk and tape drivers</text>
+<text x="559.3" y="164.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">CPU scheduling</text>
+<text x="559.3" y="185.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">page replacement</text>
+<text x="559.3" y="206.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">demand paging</text>
+<text x="559.3" y="227.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">virtual memory</text>
+<rect x="56.0" y="298" width="201.33333333333334" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="156.7" y="317.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">terminal controllers</text>
+<text x="156.7" y="335.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">terminals</text>
+<rect x="257.33333333333337" y="298" width="201.33333333333334" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="358.0" y="317.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">device controllers</text>
+<text x="358.0" y="335.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">disks and tapes</text>
+<rect x="458.6666666666667" y="298" width="201.33333333333334" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="559.3" y="317.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">memory controllers</text>
+<text x="559.3" y="335.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">physical memory</text>
+<path d="M48,92 H40 V290 H48" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<text x="26.0" y="191.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-weight:600" transform="rotate(-90 26 191)">kernel</text>
+</svg>
 
 **The kernel's block diagram (slide 2.56):**
+
+<svg viewBox="0 0 680 466" width="100%" style="max-width:680px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="UNIX kernel block diagram: user programs and libraries enter through the system-call interface to the file subsystem (buffer cache, character and block device drivers) and the process control subsystem (inter-process communication, scheduler, memory management), which use hardware control to reach the hardware." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-kblock-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-kblock-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<path d="M10,72 H670" style="fill:none;stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd));stroke-dasharray:4 4"/>
+<text x="14.0" y="64.0" text-anchor="start" style="fill:var(--text-muted, #777);font-size:11px">user level</text>
+<text x="14.0" y="88.0" text-anchor="start" style="fill:var(--text-muted, #777);font-size:11px">kernel level</text>
+<path d="M10,418 H670" style="fill:none;stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd));stroke-dasharray:4 4"/>
+<text x="14.0" y="410.0" text-anchor="start" style="fill:var(--text-muted, #777);font-size:11px">kernel level</text>
+<text x="14.0" y="434.0" text-anchor="start" style="fill:var(--text-muted, #777);font-size:11px">hardware level</text>
+<rect x="140" y="18" width="180" height="34" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="230.0" y="39.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">user programs</text>
+<rect x="460" y="18" width="150" height="34" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="535.0" y="39.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">libraries</text>
+<path d="M320,35 H457" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)"/>
+<rect x="110" y="96" width="540" height="30" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="380.0" y="116.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">system-call interface</text>
+<path d="M535,55 V93" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<rect x="110" y="156" width="250" height="60" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="235.0" y="190.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">file subsystem</text>
+<rect x="400" y="156" width="250" height="190" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="525.0" y="181.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">process control subsystem</text>
+<rect x="425" y="198" width="200" height="36" rx="5" style="fill:none;stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd));stroke-dasharray:4 4"/>
+<text x="525.0" y="221.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">inter-process communication</text>
+<rect x="425" y="246" width="200" height="36" rx="5" style="fill:none;stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd));stroke-dasharray:4 4"/>
+<text x="525.0" y="269.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">scheduler</text>
+<rect x="425" y="294" width="200" height="36" rx="5" style="fill:none;stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd));stroke-dasharray:4 4"/>
+<text x="525.0" y="317.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">memory management</text>
+<path d="M235,129 V153" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<path d="M525,129 V153" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<rect x="240" y="244" width="120" height="30" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="300.0" y="264.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">buffer cache</text>
+<path d="M300,219 V241" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<rect x="110" y="300" width="250" height="46" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<path d="M110,322 H360" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M235,300 V322" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<text x="172.0" y="316.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-size:12px">character</text>
+<text x="297.0" y="316.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-size:12px">block</text>
+<text x="235.0" y="339.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">device drivers</text>
+<path d="M300,277 V297" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<path d="M150,219 V297" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<path d="M360,190 L397,224" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)"/>
+<rect x="110" y="376" width="540" height="30" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="380.0" y="396.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">hardware control</text>
+<path d="M235,349 V373" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<path d="M525,349 V373" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-kblock-m)" marker-start="url(#q3-kblock-m)"/>
+<rect x="110" y="428" width="540" height="28" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="380.0" y="447.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">hardware</text>
+</svg>
+
 - **User level:** user programs and **libraries**. They enter the kernel through the **system-call interface**.
 - **Kernel level**, which has two main subsystems:
   - **File subsystem.** It sits on top of a **buffer cache** and the **device drivers** (character and block).
@@ -130,12 +214,25 @@ The slide sums it up as **"beyond simple but not fully layered"** (slide 2.55):
 - **Layer 0 is the hardware. Layer N is the user interface.**
 - With modularity, layers are chosen so that **each uses functions and services of only lower-level layers**.
 
-```text
-layer N   user interface
-  …
-layer 1
-layer 0   hardware
-```
+<svg viewBox="0 0 620 340" width="100%" style="max-width:620px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="Layered operating system drawn as concentric rings: layer 0 (hardware) at the centre, layer 1, more layers, and layer N (the user interface) on the outside. Each layer uses only the layers below it." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-layers-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-layers-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<circle cx="190" cy="170" r="150" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<circle cx="190" cy="170" r="112" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb);stroke-dasharray:4 4"/>
+<circle cx="190" cy="170" r="74" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<circle cx="190" cy="170" r="36" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="190.0" y="36.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">layer N</text>
+<text x="190.0" y="51.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">user interface</text>
+<text x="190.0" y="82.0" text-anchor="middle" style="fill:var(--text-muted, #777)">· · ·</text>
+<text x="190.0" y="120.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">layer 1</text>
+<text x="190.0" y="167.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px;font-weight:600">layer 0</text>
+<text x="190.0" y="182.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px;font-weight:600">hardware</text>
+<text x="392.0" y="54.0" text-anchor="start" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">layer N: user interface</text>
+<path d="M400,68 V266" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-layers-m)"/>
+<text x="414.0" y="153.5" text-anchor="start" style="fill:var(--text-muted, #777)">each layer uses only the</text>
+<text x="414.0" y="171.5" text-anchor="start" style="fill:var(--text-muted, #777)">functions and services</text>
+<text x="414.0" y="189.5" text-anchor="start" style="fill:var(--text-muted, #777)">of the layers below it</text>
+<text x="392.0" y="290.0" text-anchor="start" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">layer 0: hardware</text>
+</svg>
 
 **Advantage and disadvantages** (from the textbook; this is also practice exercise 2.8):
 - **Advantage: simplicity of construction and debugging.**
@@ -150,13 +247,43 @@ layer 0   hardware
 - **Communication** between user modules happens through **message passing**, via the microkernel.
 - **Mach** is the classic microkernel. The **Mac OS X kernel (Darwin)** is partly based on Mach.
 
-```text
-user mode     Application ⇠ messages ⇢ File system ⇠ messages ⇢ Device driver
-            ─────────────────────────────────────────────────────────────
-kernel mode   microkernel:  interprocess communication · memory management · CPU scheduling
-            ─────────────────────────────────────────────────────────────
-              hardware
-```
+<svg viewBox="0 0 730 330" width="100%" style="max-width:730px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="Microkernel structure: application program, file system and device driver run in user mode and exchange messages through the microkernel, which keeps only interprocess communication, memory management and CPU scheduling in kernel mode above the hardware." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-micro-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-micro-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<rect x="40" y="20" width="170" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="125.0" y="49.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">Application program</text>
+<rect x="250" y="20" width="170" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="335.0" y="49.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">File system</text>
+<rect x="460" y="20" width="170" height="48" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="545.0" y="49.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">Device driver</text>
+<rect x="20" y="110" width="630" height="140" rx="5" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<ellipse cx="125.0" cy="190.0" rx="88" ry="27" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="125.0" cy="190.0" rx="88" ry="27" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="125.0" y="186.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">interprocess</text>
+<text x="125.0" y="202.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">communication</text>
+<ellipse cx="335.0" cy="190.0" rx="88" ry="27" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="335.0" cy="190.0" rx="88" ry="27" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="335.0" y="186.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">memory</text>
+<text x="335.0" y="202.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">management</text>
+<ellipse cx="545.0" cy="190.0" rx="88" ry="27" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="545.0" cy="190.0" rx="88" ry="27" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="545.0" y="186.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">CPU</text>
+<text x="545.0" y="202.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">scheduling</text>
+<text x="335.0" y="240.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-weight:600">microkernel</text>
+<path d="M110,71 V132 H320 V71" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#q3-micro-a)" marker-start="url(#q3-micro-a)"/>
+<path d="M350,71 V132 H530 V71" style="fill:none;stroke:var(--accent, #6c99bb);stroke-width:1.6;stroke-dasharray:5 4" marker-end="url(#q3-micro-a)" marker-start="url(#q3-micro-a)"/>
+<text x="215.0" y="125.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-size:11px">messages</text>
+<text x="440.0" y="125.0" text-anchor="middle" style="fill:var(--text-muted, #777);font-size:11px">messages</text>
+<rect x="20" y="280" width="630" height="36" rx="5" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="335.0" y="303.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c))">hardware</text>
+<path d="M125,253 V277" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-micro-m)" marker-start="url(#q3-micro-m)"/>
+<path d="M545,253 V277" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3" marker-end="url(#q3-micro-m)" marker-start="url(#q3-micro-m)"/>
+<path d="M660,20 H668 V68 H660" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<text x="676.0" y="40.5" text-anchor="start" style="fill:var(--text-muted, #777);font-size:12px">user</text>
+<text x="676.0" y="56.5" text-anchor="start" style="fill:var(--text-muted, #777);font-size:12px">mode</text>
+<path d="M660,110 H668 V250 H660" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<text x="676.0" y="176.5" text-anchor="start" style="fill:var(--text-muted, #777);font-size:12px">kernel</text>
+<text x="676.0" y="192.5" text-anchor="start" style="fill:var(--text-muted, #777);font-size:12px">mode</text>
+</svg>
 
 In the slide's figure, **file systems and device drivers run in user mode**. Only **IPC, memory management, and CPU scheduling** stay in the microkernel.
 
@@ -178,6 +305,50 @@ Many modern OSes implement **loadable kernel modules (LKMs)**:
 Overall this is **similar to layers, but more flexible**. Examples are **Linux and Solaris**.
 
 **Solaris (slide 2.65):** a **core Solaris kernel** surrounded by **7 types of loadable modules**:
+
+<svg viewBox="0 0 640 340" width="100%" style="max-width:640px;display:block;margin:1.25em auto;font-size:13px" role="img" aria-label="Solaris modular approach: a core Solaris kernel surrounded by seven loadable module types: scheduling classes, file systems, loadable system calls, executable formats, STREAMS modules, miscellaneous modules, device and bus drivers." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q3-solaris-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--text-muted, #777)"/></marker><marker id="q3-solaris-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent, #6c99bb)"/></marker></defs>
+<path d="M320,175 L320.0,50.0" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L495.9,97.1" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L539.4,202.8" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L417.6,287.6" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L222.4,287.6" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L100.6,202.8" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<path d="M320,175 L144.1,97.1" style="fill:none;stroke:var(--text-muted, #777);stroke-width:1.3"/>
+<ellipse cx="320.0" cy="50.0" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="320.0" cy="50.0" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="320.0" y="47.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">scheduling</text>
+<text x="320.0" y="62.0" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">classes</text>
+<ellipse cx="495.9" cy="97.1" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="495.9" cy="97.1" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="495.9" y="94.1" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">file</text>
+<text x="495.9" y="109.1" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">systems</text>
+<ellipse cx="539.4" cy="202.8" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="539.4" cy="202.8" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="539.4" y="199.8" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">loadable</text>
+<text x="539.4" y="214.8" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">system calls</text>
+<ellipse cx="417.6" cy="287.6" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="417.6" cy="287.6" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="417.6" y="284.6" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">executable</text>
+<text x="417.6" y="299.6" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">formats</text>
+<ellipse cx="222.4" cy="287.6" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="222.4" cy="287.6" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="222.4" y="284.6" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">STREAMS</text>
+<text x="222.4" y="299.6" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">modules</text>
+<ellipse cx="100.6" cy="202.8" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="100.6" cy="202.8" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="100.6" y="199.8" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">miscellaneous</text>
+<text x="100.6" y="214.8" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">modules</text>
+<ellipse cx="144.1" cy="97.1" rx="76" ry="26" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="144.1" cy="97.1" rx="76" ry="26" style="fill:var(--accent-soft, rgba(108,153,187,0.14));stroke:var(--accent, #6c99bb)"/>
+<text x="144.1" y="94.1" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">device and</text>
+<text x="144.1" y="109.1" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-size:12px">bus drivers</text>
+<ellipse cx="320.0" cy="175.0" rx="88" ry="34" style="fill:var(--bg, var(--background-primary, #fff));stroke:none"/>
+<ellipse cx="320.0" cy="175.0" rx="88" ry="34" style="fill:var(--code-bg, var(--background-secondary, #f4f4f4));stroke:var(--border-strong, var(--background-modifier-border, #bdbdbd))"/>
+<text x="320.0" y="171.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">core Solaris</text>
+<text x="320.0" y="187.5" text-anchor="middle" style="fill:var(--text, var(--text-normal, #1c1c1c));font-weight:600">kernel</text>
+</svg>
+
 1. scheduling classes
 2. file systems
 3. loadable system calls
