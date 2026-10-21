@@ -12,23 +12,91 @@ interface Props {
 const { data, currentId, compact = false, label = 'Note graph' } = Astro.props;
 // `<` is escaped so the JSON can never close its own <script> tag.
 const json = JSON.stringify(data).replace(/</g, '\\u003c');
+// The fullscreen legend lists only the topics this graph actually shows.
+const present = new Set(data.nodes.map((node) => node.topic));
+const legend = data.topics.map((topic, i) => ({ ...topic, index: i })).filter((topic) => present.has(topic.index));
+const unfiled = data.nodes.some((node) => node.topic < 0);
 ---
-<div class="graph" data-graph data-compact={compact || undefined} data-current={currentId} role="img" aria-label={label}>
-  <canvas></canvas>
+<div class="graph" data-graph data-compact={compact || undefined} data-current={currentId} tabindex="-1">
+  <canvas role="img" aria-label={label}></canvas>
   <script is:inline type="application/json" data-graph-data set:html={json} />
-  {
-    !compact && (
-      <div class="graph-controls">
-        <button class="icon-button" type="button" data-action="graph-zoom-in" aria-label="Zoom in">
-          <Icon name="plus" />
+  <div class="graph-controls">
+    <button class="icon-button" type="button" data-action="graph-zoom-in" data-zoom aria-label="Zoom in">
+      <Icon name="plus" />
+    </button>
+    <button class="icon-button" type="button" data-action="graph-zoom-out" data-zoom aria-label="Zoom out">
+      <Icon name="minus" />
+    </button>
+    <button class="icon-button" type="button" data-action="graph-fit" data-zoom aria-label="Fit graph to view">
+      <Icon name="fit" />
+    </button>
+    <button class="icon-button" type="button" data-action="graph-fullscreen" data-expand aria-label="Open graph fullscreen" title="Fullscreen (F)">
+      <Icon name="expand" />
+    </button>
+  </div>
+  <div class="graph-chrome">
+    <div class="graph-find">
+      <label class="graph-find-field">
+        <Icon name="search" />
+        <input
+          type="search"
+          placeholder="Find a note…"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Find a note in the graph"
+          role="combobox"
+          aria-expanded="false"
+          aria-autocomplete="list"
+          data-find-input
+        />
+        <kbd>/</kbd>
+      </label>
+      <ul class="graph-find-results" role="listbox" aria-label="Matching notes" data-find-results hidden></ul>
+    </div>
+    <button class="icon-button graph-exit" type="button" data-action="graph-exit" aria-label="Exit fullscreen" title="Exit fullscreen (Esc)">
+      <Icon name="close" />
+    </button>
+    <p class="graph-hint" aria-hidden="true">
+      <span class="graph-hint-pointer">Click to focus · double-click to open · arrow keys move along links · <kbd>/</kbd> to find</span>
+      <span class="graph-hint-touch">Tap to focus · double-tap to open · pinch to zoom</span>
+    </p>
+    <aside class="graph-card" aria-live="polite" data-graph-card hidden>
+      <div class="graph-card-head">
+        <button class="icon-button graph-card-back" type="button" data-graph-back aria-label="Back" hidden>
+          <Icon name="chevron" />
         </button>
-        <button class="icon-button" type="button" data-action="graph-zoom-out" aria-label="Zoom out">
-          <Icon name="minus" />
-        </button>
-        <button class="icon-button" type="button" data-action="graph-fit" aria-label="Fit graph to view">
-          <Icon name="fit" />
+        <span class="graph-card-topic"><span class="swatch" data-card-swatch></span><span dir="auto" data-card-topic></span></span>
+        <button class="icon-button" type="button" data-graph-deselect aria-label="Clear focus">
+          <Icon name="close" />
         </button>
       </div>
-    )
-  }
+      <h2 class="graph-card-title" dir="auto" data-card-title></h2>
+      <p class="graph-card-meta" data-card-meta></p>
+      <ul class="graph-card-links" data-card-links></ul>
+      <a class="graph-card-open" href="" data-card-open>Open note <Icon name="chevron" /></a>
+    </aside>
+    {
+      (legend.length > 0 || unfiled) && (
+        <ul class="graph-topics" aria-label="Highlight a topic">
+          {legend.map((topic) => (
+            <li>
+              <button type="button" data-topic={topic.index} aria-pressed="false">
+                <span class="swatch" style={`--swatch: var(${topic.colorVar})`} />
+                <span dir="auto">{topic.name}</span>
+              </button>
+            </li>
+          ))}
+          {unfiled && (
+            <li>
+              <button type="button" data-topic="-1" aria-pressed="false">
+                <span class="swatch" style="--swatch: var(--topic-none)" />
+                <span>Unfiled</span>
+              </button>
+            </li>
+          )}
+        </ul>
+      )
+    }
+  </div>
 </div>

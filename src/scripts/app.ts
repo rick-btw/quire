@@ -3,6 +3,13 @@
  * navigations, so everything is wired through delegation and Astro's lifecycle events.
  */
 import { destroyAllGraphs, graphControl, mountAllGraphs } from './graph';
+import {
+  closeGraphFullscreen,
+  handleGraphKey,
+  isGraphFullscreen,
+  pageGraph,
+  toggleGraphFullscreen,
+} from './graph-fullscreen';
 import { mountOutline, unmountOutline } from './outline';
 import { closeSearch, initSearch, isSearchOpen, openSearch, recordVisit } from './search';
 import { closeDrawer, initSidebar, isDrawerOpen, openDrawer, syncActive } from './sidebar';
@@ -41,6 +48,12 @@ document.addEventListener('click', (event) => {
     case 'graph-fit':
       graphControl(action, trigger);
       break;
+    case 'graph-fullscreen':
+      toggleGraphFullscreen(trigger.closest<HTMLElement>('[data-graph]'));
+      break;
+    case 'graph-exit':
+      closeGraphFullscreen();
+      break;
     default:
       return;
   }
@@ -48,6 +61,7 @@ document.addEventListener('click', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
+  if (isGraphFullscreen() && !isSearchOpen() && handleGraphKey(event)) return;
   const mod = event.metaKey || event.ctrlKey;
   if (mod && event.key.toLowerCase() === 'k') {
     event.preventDefault();
@@ -62,6 +76,13 @@ document.addEventListener('keydown', (event) => {
   if (event.key === '/' && !mod && !isSearchOpen() && !isTyping(event.target)) {
     event.preventDefault();
     openSearch();
+    return;
+  }
+  if (event.key.toLowerCase() === 'f' && !mod && !event.altKey && !isSearchOpen() && !isTyping(event.target)) {
+    const graph = pageGraph();
+    if (!graph) return;
+    event.preventDefault();
+    toggleGraphFullscreen(graph);
   }
 });
 
@@ -74,6 +95,7 @@ document.addEventListener('astro:page-load', () => {
 });
 
 document.addEventListener('astro:before-swap', () => {
+  closeGraphFullscreen(true);
   unmountOutline();
   destroyAllGraphs();
 });

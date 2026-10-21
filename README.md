@@ -33,7 +33,7 @@ backlinks (every note that links to the one you're reading).
 
 **Connected notes.** Notes link to each other with Obsidian's `[[wikilinks]]`, so you can follow an idea from
 one topic into another. The **graph view** shows the whole library at once, with every note as a node and
-every link as an edge.
+every link as an edge. Open any graph fullscreen (press `F`) to find a note, focus it, and hop along its links.
 
 **Fast search.** Press `⌘K` (or `Ctrl K`) anywhere to fuzzy-search titles, aliases, tags, and note contents.
 

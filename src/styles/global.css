@@ -446,6 +446,29 @@ svg.icon {
   border: 1px solid var(--border);
   border-radius: var(--radius-m);
 }
+.graph:focus {
+  outline: none;
+}
+/* The panel graph only offers fullscreen, shown on hover; zooming happens there. */
+.graph[data-compact]:not([data-fullscreen]) [data-zoom] {
+  display: none;
+}
+.graph[data-compact]:not([data-fullscreen]) .graph-controls {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.graph[data-compact]:hover .graph-controls,
+.graph[data-compact]:focus-within .graph-controls {
+  opacity: 1;
+}
+@media (hover: none) {
+  .graph[data-compact] .graph-controls {
+    opacity: 1;
+  }
+}
+.graph[data-fullscreen] [data-expand] {
+  display: none;
+}
 .graph-legend {
   display: flex;
   flex-wrap: wrap;
@@ -482,6 +505,366 @@ svg.icon {
 }
 .graph-page .graph {
   height: min(72vh, 760px);
+}
+
+/* ---------- Fullscreen graph ---------- */
+html.graph-fullscreen-open {
+  overflow: hidden;
+}
+.graph-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+.graph-dialog::backdrop {
+  background: var(--backdrop, hsl(0 0% 0% / 0.4));
+}
+dialog.graph-dialog > .graph {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.graph[data-fullscreen] {
+  --edge-top: max(0.75rem, env(safe-area-inset-top));
+  --edge-right: max(0.75rem, env(safe-area-inset-right));
+  --edge-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  --edge-left: max(0.75rem, env(safe-area-inset-left));
+  --float-bg: color-mix(in srgb, var(--bg) 88%, transparent);
+}
+.graph[data-fullscreen] .graph-controls {
+  right: var(--edge-right);
+  bottom: var(--edge-bottom);
+  background: var(--float-bg);
+  backdrop-filter: blur(8px);
+  animation: graph-chrome-in 240ms 120ms both ease-out;
+}
+.graph-chrome {
+  display: none;
+}
+.graph[data-fullscreen] .graph-chrome {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.graph-chrome > * {
+  pointer-events: auto;
+  animation: graph-chrome-in 240ms 120ms both ease-out;
+}
+.graph-chrome [hidden] {
+  display: none !important;
+}
+.graph-chrome .swatch {
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--swatch);
+}
+.graph-chrome kbd {
+  font: inherit;
+  font-size: var(--text-tiny);
+  padding: 0 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+}
+.graph-find-field,
+.graph-find-results,
+.graph-exit,
+.graph-card,
+.graph-topics {
+  background: var(--float-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+}
+
+.graph-find {
+  position: absolute;
+  top: var(--edge-top);
+  left: var(--edge-left);
+  width: min(20rem, calc(100% - var(--edge-left) - var(--edge-right) - 3rem));
+}
+.graph-find-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.25rem;
+  padding: 0 0.65rem;
+  color: var(--text-faint);
+  font-size: var(--text-small);
+  cursor: text;
+}
+.graph-find-field:focus-within {
+  border-color: var(--border-strong);
+}
+.graph-find-field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  color: var(--text);
+}
+.graph-find-field input::-webkit-search-cancel-button {
+  display: none;
+}
+.graph-find-field:focus-within kbd {
+  visibility: hidden;
+}
+.graph-find-results {
+  margin: 0.35rem 0 0;
+  padding: 0.3rem;
+  max-height: min(50vh, 22rem);
+  overflow-y: auto;
+  list-style: none;
+  box-shadow: var(--shadow);
+  font-size: var(--text-small);
+}
+.graph-find-results li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--radius-s);
+  color: var(--text);
+  cursor: pointer;
+}
+.graph-find-results li[aria-selected='true'],
+.graph-find-results li[role='option']:hover {
+  background: var(--bg-hover);
+}
+.graph-find-results li.graph-find-empty {
+  color: var(--text-faint);
+  cursor: default;
+}
+
+.graph-exit {
+  position: absolute;
+  top: var(--edge-top);
+  right: var(--edge-right);
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.graph-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--edge-bottom) + 3rem);
+  margin: 0;
+  transform: translateX(-50%);
+  max-width: calc(100% - 2rem);
+  font-size: var(--text-tiny);
+  color: var(--text-faint);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.graph-chrome > .graph-hint {
+  pointer-events: none;
+  animation: graph-hint 5.5s 0.3s both;
+}
+.graph-hint-touch {
+  display: none;
+}
+@media (hover: none) {
+  .graph-hint-pointer {
+    display: none;
+  }
+  .graph-hint-touch {
+    display: inline;
+  }
+}
+
+.graph-card {
+  position: absolute;
+  top: calc(var(--edge-top) + 2.85rem);
+  right: var(--edge-right);
+  display: flex;
+  flex-direction: column;
+  width: 18rem;
+  max-height: calc(100% - var(--edge-top) - var(--edge-bottom) - 6.75rem);
+  padding: 0.7rem 0.85rem 0.85rem;
+  box-shadow: var(--shadow);
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+.graph-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: -0.35rem -0.45rem 0.25rem;
+}
+.graph-card-head .icon-button {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+.graph-card-back svg {
+  transform: scaleX(-1);
+}
+.graph-card-topic {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-inline-start: 0.45rem;
+  font-size: var(--text-tiny);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.graph-card-back:not([hidden]) + .graph-card-topic {
+  padding-inline-start: 0;
+}
+.graph-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text);
+}
+.graph-card-meta {
+  margin: 0.15rem 0 0.45rem;
+  font-size: var(--text-tiny);
+  color: var(--text-faint);
+}
+.graph-card-links {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 -0.45rem;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+.graph-card-links button {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.32rem 0.45rem;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-small);
+  text-align: start;
+  cursor: pointer;
+}
+.graph-card-links button:hover {
+  background: var(--bg-hover);
+}
+.graph-card-links button span[dir] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.graph-card-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 0.7rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-m);
+  background: var(--accent-soft);
+  color: var(--link);
+  font-weight: 500;
+  text-decoration: none;
+}
+.graph-card-open:hover {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+.graph-topics {
+  position: absolute;
+  left: var(--edge-left);
+  bottom: var(--edge-bottom);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+  max-width: calc(100% - var(--edge-left) - var(--edge-right) - 8.5rem);
+  margin: 0;
+  padding: 0.2rem;
+  list-style: none;
+}
+.graph-topics button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.55rem;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-tiny);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.graph-topics button:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+.graph-topics button[aria-pressed='true'] {
+  background: var(--bg-active);
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .graph[data-fullscreen] .graph-controls {
+    bottom: calc(var(--edge-bottom) + 2.7rem);
+  }
+  .graph-topics {
+    right: var(--edge-right);
+    max-width: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .graph-hint {
+    bottom: calc(var(--edge-bottom) + 6rem);
+  }
+  .graph-card {
+    top: auto;
+    left: var(--edge-left);
+    bottom: var(--edge-bottom);
+    width: auto;
+    max-height: 45%;
+  }
+  /* The bottom sheet takes the place of the legend, controls and hint while a note is focused. */
+  .graph:has(.graph-card:not([hidden])) :is(.graph-topics, .graph-controls, .graph-hint) {
+    display: none;
+  }
+}
+
+@keyframes graph-chrome-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes graph-hint {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  6%,
+  75% {
+    opacity: 1;
+  }
 }
 
 /* ---------- Search dialog ---------- */
