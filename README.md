@@ -13,6 +13,13 @@ site rebuilds itself.
 
 ## What's inside
 
+<a href="https://rick-btw.github.io/quire/graph/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://rick-btw.github.io/quire/graph-dark.svg">
+    <img alt="The graph of every note in Quire, coloured by topic" src="https://rick-btw.github.io/quire/graph-light.svg">
+  </picture>
+</a>
+
 | Topic | What it covers |
 | --- | --- |
 | Data structures | Graphs, trees, hash maps, and the algorithms that walk them |
