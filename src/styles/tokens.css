@@ -50,18 +50,21 @@
   --purple: #9e86c8;
   --pink: #b05279;
 
-  /* Orange and red come last so they rarely land next to the fixed LeetCode and CS50 colours. */
-  --topic-0: var(--blue);
-  --topic-1: var(--green);
-  --topic-2: var(--purple);
-  --topic-3: var(--cyan);
-  --topic-4: var(--pink);
-  --topic-5: var(--yellow);
+  /* Blue, orange and red come last so they rarely land next to the fixed Operating Systems,
+     LeetCode, CS50 and data-structures colours. */
+  --topic-0: var(--green);
+  --topic-1: var(--purple);
+  --topic-2: var(--pink);
+  --topic-3: var(--yellow);
+  --topic-4: var(--cyan);
+  --topic-5: var(--blue);
   --topic-6: var(--orange);
   --topic-7: var(--red);
   --topic-none: hsl(0 0% 60%);
   --topic-color-cs50: #a51c30; /* Harvard Crimson */
   --topic-color-leetcode: #ffa116; /* LeetCode orange */
+  --topic-color-data-structures: #ee6a40; /* Calder's "Big Red" mobile, on every CLRS cover */
+  --topic-color-operating-systems: #006699; /* title blue of the Silberschatz slides */
 
   --graph-line: hsl(0 0% 0% / 0.16);
   --graph-label: var(--text-muted);
@@ -90,5 +93,6 @@ html.dark {
   --backdrop: hsl(0 0% 0% / 0.55);
 
   --topic-color-cs50: #c23a4d;
+  --topic-color-operating-systems: #3d94c8;
   --graph-line: hsl(0 0% 100% / 0.16);
 }
