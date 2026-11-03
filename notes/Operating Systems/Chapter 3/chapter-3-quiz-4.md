@@ -6,7 +6,7 @@ tags: [operating-systems, quiz-prep]
 # Quiz 4: Chapter 3, Slides 1–48
 
 > [!abstract] This note is for **Quiz 4**: chapter 3 (*Processes*), **slides 3.1–3.44**, possibly up to **3.48**
-> Everything through slide 3.44 is covered in full. Slides 3.45–3.48 (the bounded-buffer code and shared memory) are marked **⚑ only if the range goes to 48**. Earlier chapters: [[00-overview|Chapter 1 overview]], [[chapter-2-summary|Chapter 2 Summary]], [[chapter-2-quiz-3|Quiz 3]].
+> Everything through slide 3.44 is covered in full. Slides 3.45–3.48 (the bounded-buffer code and shared memory) are marked **⚑ only if the range goes to 48**. Earlier chapters: [[00-overview|Chapter 1 overview]], [[chapter-2-summary|Chapter 2 Summary]], [[chapter-2-quiz-3|Quiz 3]]. The rest of chapter 3 (message passing) is in [[chapter-3-quiz-5|Quiz 5: Chapter 3, Slides 45–66]].
 
 > [!warning] Last year's Quiz 4 asked: **"Context switch" and "the parts of the PCB"**
 > An answer that described the context switch and listed the **7 PCB fields** got **100**. That's slides 3.12–3.13 and 3.22, so know [the PCB](#4-the-process-control-block-pcb-slides-312-315) and [the context switch](#5-context-switch-slides-313-322) cold. More ideas are in [likely questions](#likely-quiz-questions-and-5-minute-answers).
